@@ -43,6 +43,13 @@ def print_interactions(cursor, drug_a, drug_b):
     :returns:
     :rtype: None
     """
+    cursor.execute("SELECT Level FROM mpa_data WHERE Drug_A = ? AND Drug_B = ?", (drug_a, drug_b))
+    results = cursor.fetchall()
+
+    level = results[0][0]
+
+    print(f"Interaction between {drug_a} and {drug_b} is {level}")
+    print()
 
 
 if __name__ == "__main__":
@@ -56,10 +63,15 @@ if __name__ == "__main__":
     num_entries = 5
     print_first_n_entries(cursor, num_entries)
 
+    # Visual Separation
+    print()
+    print("+" * 50)
+    print()
+
     # Print interaction level between two drugs
     drugA = "Morphine"
     drugB = "Fentanyl"
-    #print_interactions(cursor, drugA, drugB)
+    print_interactions(cursor, drugA, drugB)
 
     # Close the connection
     conn.close()
